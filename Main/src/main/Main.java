@@ -1,11 +1,11 @@
-
 package main;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException{
         String res="s";
         String estado="menu";
         Scanner ent = new Scanner(System.in);
@@ -120,6 +120,8 @@ public class Main {
                             boolean foi = s2.CarAdd(id, qtd);
                             if(foi){
                                 System.out.println("Produto inserido.");
+                            }else{
+                                System.out.println("ERRO.");
                             }
                         }
                         System.out.println("\nIr ao menu ?(s|n)");
@@ -148,6 +150,8 @@ public class Main {
                             boolean foi = s2.CarAdd(id, qtd);
                             if(foi){
                                 System.out.println("Produto inserido.");
+                            }else{
+                                System.out.println("ERRO.");
                             }
                             break;
                         case 2:
@@ -194,19 +198,25 @@ public class Main {
                 case "delivery":
                     System.out.println("Informe seu nome: ");
                     String nome = ent.next();
+                    ent.nextLine();
                     System.out.println("Informe seu endereço");
-                    System.out.print("Numero da Rua: ");
-                    int rua= ent.nextInt();
+                    System.out.print("Rua: ");
+                    String rua= ent.nextLine();
+                    //ent.nextLine();
                     System.out.print("Numero da Casa: ");
                     int casa= ent.nextInt();
-                    System.out.print("Numero da Quadra: ");
-                    int quadra = ent.nextInt();
-                    System.out.print("Nome do Bairro:");
-                    String bairro= ent.next();
-                    System.out.print("Nome da Cidade:");
-                    String cidade = ent.next();
+                    ent.nextLine();
+                    System.out.print("Bairro: ");
+                    String bairro= ent.nextLine();
+                    //ent.nextLine();
+                    System.out.print("Cidade: ");
+                    String cidade = ent.nextLine();
+                    //ent.nextLine();
+                    System.out.print("Estado: ");
+                    String UF = ent.nextLine();
+                    //ent.nextLine();
                     double div=s2.conta();
-                    Delivery entrega = new Delivery(s2.getCesta(),nome,div,rua,casa,quadra,bairro,cidade);
+                    Delivery entrega = new Delivery(s2.getCesta(),nome,div,rua,casa,bairro,cidade,UF);
                     System.out.println(entrega);
                     s2.abaixoEstoque();
                     System.out.println("\nIr ao menu ?(s|n)");
@@ -227,5 +237,3 @@ public class Main {
         }while(res.equals("s"));
     }
 }
-    
-

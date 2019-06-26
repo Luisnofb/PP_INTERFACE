@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
-/**
- *
- * @author luisn
- */
 public class ItemCesta {
     private int id;
     private String nome[];
@@ -51,8 +42,4 @@ public class ItemCesta {
     protected void setPreco(double preco) {
         this.preco = preco;
     }
-    
-    
-    
-    
 }

@@ -1,6 +1,4 @@
-
 package main;
-
 
 public class Produto {
     
@@ -13,7 +11,6 @@ public class Produto {
     private double preco;
     
     public Produto(int id, String nome[], String autor[], String genero[], int quantidade, String editora, double preco){
-    
         this.id = id;
         this.nome = nome;
         this.autor = autor;
@@ -21,7 +18,6 @@ public class Produto {
         this.quantidade = quantidade;
         this.editora = editora;
         this.preco = preco;
-    
     }    
     
     //MÉTODOS GETTER
@@ -60,13 +56,12 @@ public class Produto {
 
     protected void setPreco(double preco) {
         this.preco = preco;
-    }
-    
+    }  
     
     
     // PRINTAR Produto
     protected void printProduto(Produto p){
-        System.out.print("Nome: ");
+        System.out.print("\nNome: ");
         for (String nome1 : p.nome) {
             System.out.print(nome1 + " ");
         }

@@ -1,14 +1,12 @@
-
-
 package main;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 
 public class Loja {
     private Catalogo catalogo;
     private CestaCompras cesta;
     
-    public Loja(){
+    public Loja() throws FileNotFoundException{
         catalogo = new Catalogo();
         cesta = new CestaCompras();
     }
@@ -27,17 +25,17 @@ public class Loja {
     //////////METODOS CATALOGO///////////////
     
     //Lista tudo que temos em estoque.
-    public void armazem(){
+    protected void armazem(){
             ArrayList print = catalogo.ctlg;
             catalogo.printCatalogo(print);
     }
     //lista os elementos  de uma pesquisa por array.
-    public void result(ArrayList l){
+    protected void result(ArrayList l){
         catalogo.printCatalogo(l);
     }
     
     //mostra todos os detalhes de um elemento por id.
-    public void detalhes(int id ){
+    protected void detalhes(int id ){
         Produto aux;
         for(int i=0;i< catalogo.ctlg.size();i++){
             aux = (Produto)catalogo.ctlg.get(i);
@@ -46,12 +44,11 @@ public class Loja {
             }
         }
     }
-    
-    
+
     
     ////////////METODOS CARRINHO///////////////
     
-    boolean CarAdd(int id,int qtd){
+    protected boolean CarAdd(int id,int qtd){
         Produto aux;
         ItemCesta item;
         boolean tst;
@@ -78,7 +75,7 @@ public class Loja {
         return false;
     }
     
-    public boolean CarModQtd(int id ,int n){
+    protected boolean CarModQtd(int id ,int n){
         ItemCesta aux;
         Produto prod = null;
         for(int j=0;j<catalogo.ctlg.size();j++){
@@ -99,7 +96,7 @@ public class Loja {
         
     }
     
-    public void NaCesta(){
+    protected void NaCesta(){
         if(cesta != null){
             cesta.printCesta();
         }else{
@@ -107,7 +104,7 @@ public class Loja {
         }
     }
     ///////////monetário//////////
-    public double conta(){
+    protected double conta(){
         double valor=0;
         ItemCesta aux;
         for(int i=0; i<cesta.getItens().size(); i++){
@@ -117,7 +114,7 @@ public class Loja {
         return valor;
     }
     
-    public void abaixoEstoque(){
+    protected void abaixoEstoque(){
         cesta.efetuarCompra(catalogo.ctlg);
         cesta = new CestaCompras();
     }

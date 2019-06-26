@@ -1,191 +1,86 @@
-
 package main;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Catalogo {
     ArrayList<Produto> ctlg;
     
-    public Catalogo(){
+    public Catalogo() throws FileNotFoundException{
         ctlg = new ArrayList<Produto>();
-
-        String n[], a[], g[];      // nome , autor, genero
-        Produto p;
+        try {
+            Produto p;
+            String n[] = new String[20], aux[] = null, e = null;
+            String a[] = new String[2];
+            String g[] = new String[2];
+            int numb = 0, quant = 0, pos = 0;
+            double pr = 0;
+            FileReader ler = new FileReader("armazem.txt");
+            BufferedReader reader = new BufferedReader(ler);  
+            String linha;
+            int state = 0;
+            while( (linha = reader.readLine()) != null ){
+                switch (state) {
+                    case 0:
+                        numb = Integer.parseInt(linha);
+                        state = 1;
+                        break;
+                    case 1:
+                        if(!"$".equals(linha)){
+                            n[pos] = linha;
+                            pos++;
+                        }else{
+                            aux = new String[pos];
+                            for(int i=0; i<pos; i++){
+                                aux[i] = n[i];
+                            }
+                            pos=0;
+                            state=2;
+                        }   
+                        break;
+                    case 2:
+                        a[0] = linha;
+                        state = 3;
+                        break;
+                    case 3:
+                        a[1] = linha;
+                        state = 4;
+                        break;
+                    case 4:
+                        g[0] = linha;
+                        state = 5;
+                        break;
+                    case 5:
+                        g[1] = linha;
+                        state = 6;
+                        break;
+                    case 6:
+                        quant = Integer.parseInt(linha);
+                        state = 7;
+                        break;
+                    case 7:
+                        e = linha;
+                        state = 8;
+                        break;
+                    case 8:
+                        pr = Double.parseDouble(linha);
+                        state = 9;
+                        p = new Produto(numb, aux, a, g, quant, e, pr);
+                        ctlg.add(p);
+                        state = 0;
+                        break;
+                }
+            }
+            ler.close();
+            System.out.println("SUCESSO AO LER O ARQUIVO");
+        }catch(IOException f) {
+            System.out.println("\n\nERRO AO LER O ARQUIVO\n");
+        }    
         
-        // PRODUTO 1
-        n = new String[]{"Superman","-","Grandes","Astros"}; 
-        a = new String[]{"Morrison","Grant"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(1, n, a, g, 23, "DC", 59.90);
-        ctlg.add(p);
-
-        // PRODUTO 2
-        n = new String[]{"Batman","-","A","Piada","Mortal"}; 
-        a = new String[]{"Moore","Alan"}; 
-        g = new String[]{"Suspense","Terror"};
-        p = new Produto(2, n, a, g, 54, "DC", 24.50);
-        ctlg.add(p);
-
-        // PRODUTO 3
-        n = new String[]{"Demolidor","-","A","Queda","de","Murdock"}; 
-        a = new String[]{"Miller","Frank"}; 
-        g = new String[]{"Acao","Suspense"};
-        p = new Produto(3, n, a, g, 15, "Marvel", 45.90);
-        ctlg.add(p);
-
-        // PRODUTO 4
-        n = new String[]{"Batman","-","O","Cavaleiro","das","Trevas"}; 
-        a = new String[]{"Miller","Frank"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(4, n, a, g, 61, "DC", 94.00);
-        ctlg.add(p);
-
-        // PRODUTO 5
-        n = new String[]{"Pantera","Negra","-","Uma","Nação","Sob","Nossos","Pés"}; 
-        a = new String[]{"Coates","Ta-Nehisi"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(5, n, a, g, 52, "Marvel", 20.23);
-        ctlg.add(p);
-
-        // PRODUTO 6
-        n = new String[]{"Chico","Bento","-","Arvorada"}; 
-        a = new String[]{"Sousa","Mauricio"}; 
-        g = new String[]{"Aventura","Infantil"};
-        p = new Produto(6, n, a, g, 92, "Mauricio de Sousa", 24.90);
-        ctlg.add(p);
-
-        // PRODUTO 7
-        n = new String[]{"Capitã","Marvel", "-","Mais","Alto",",","Mais","Longe",",","Mais","Rápido","e","Mais"}; 
-        a = new String[]{"Deconnick","Sue"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(7, n, a, g, 83, "Marvel", 29.88);
-        ctlg.add(p);
-
-        // PRODUTO 8
-        n = new String[]{"Homem","Aranha","-","A","Última","Caçada","de","Kraven"}; 
-        a = new String[]{"Matteis","Jonh"}; 
-        g = new String[]{"Aventura","Romance"};
-        p = new Produto(8, n, a, g, 22, "Marvel", 48.00);
-        ctlg.add(p);
-
-        // PRODUTO 9
-        n = new String[]{"Oblivion","Song","-","Canção","do","Silêncio"}; 
-        a = new String[]{"Kirkman","Robert"}; 
-        g = new String[]{"Aventura","Fantasia"};
-        p = new Produto(9, n, a, g, 46, "Intrinseca", 29.99);
-        ctlg.add(p);
-
-        // PRODUTO 10
-        n = new String[]{"Thor","-","Vikings "}; 
-        a = new String[]{"Ennis ","Garth"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(10, n, a, g, 37, "Marvel", 23.90);
-        ctlg.add(p);
-
-        // PRODUTO 11
-        n = new String[]{"Flash","-","Seguindo","em","Frente"}; 
-        a = new String[]{"Manapul","Francis"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(11, n, a, g, 64, "DC", 23.32);
-        ctlg.add(p);
-
-        // PRODUTO 12
-        n = new String[]{"Maus"}; 
-        a = new String[]{"Spiegelgman","Art"}; 
-        g = new String[]{"Suspense","Fantasia"};
-        p = new Produto(12, n, a, g, 9, "Pantheon", 62.90);
-        ctlg.add(p);
-
-        // PRODUTO 13
-        n = new String[]{"O","Incrivel","Hulk","-","Planeta","Hulk"}; 
-        a = new String[]{"Pak","Greg"}; 
-        g = new String[]{"Acao","Romance"};
-        p = new Produto(13, n, a, g, 18, "Marvel", 77.90);
-        ctlg.add(p);
-
-        // PRODUTO 14
-        n = new String[]{"Aquaman","-","As","Profundezas"};
-        a = new String[]{"Johns","Geoff"}; 
-        g = new String[]{"Aventura","Romance"};
-        p = new Produto(14, n, a, g, 89, "DC", 26.90);
-        ctlg.add(p);
-
-        // PRODUTO 15
-        n = new String[]{"Absolute","Sandman"}; 
-        a = new String[]{"Gaiman","Neil"}; 
-        g = new String[]{"Suspense","Terror"};
-        p = new Produto(15, n, a, g, 15, "Vertigo", 113.10);  
-        ctlg.add(p);
-
-        // PRODUTO 16
-        n = new String[]{"A","Saga","do","Monstro","do","Pântano"}; 
-        a = new String[]{"Moore","Alan"}; 
-        g = new String[]{"Suspense","Terror"};
-        p = new Produto(16, n, a, g, 26, "Vertigo", 59.99);
-        ctlg.add(p);
-
-        // PRODUTO 17
-        n = new String[]{"Watchmen"}; 
-        a = new String[]{"Moore","Alan"}; 
-        g = new String[]{"Acao","Suspense"};
-        p = new Produto(17, n, a, g, 2, "Vertigo", 110.00);
-        ctlg.add(p);
-
-        // PRODUTO 18
-        n = new String[]{"Bone","-","O","vale","ou","equinócio","vernal"}; 
-        a = new String[]{"Smith","Jeff"}; 
-        g = new String[]{"Fantasia","Aventura"};
-        p = new Produto(18, n, a, g, 35, "Todavia", 62.32);
-        ctlg.add(p);
-
-        // PRODUTO 19
-        n = new String[]{"Ms","Marvel","-","Nada","Normal"}; 
-        a = new String[]{"Wilson","Willow"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(19, n, a, g, 11, "Marvel", 89.99);
-        ctlg.add(p);
-
-        // PRODUTO 20
-        n = new String[]{"Reino","do","Amanha"}; 
-        a = new String[]{"Waid","Mark"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(20, n, a, g, 27, "DC", 74.40);
-        ctlg.add(p);
-
-         // PRODUTO 21
-        n = new String[]{"Guerras","Secretas"}; 
-        a = new String[]{"Shooter","Jim"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(21, n, a, g, 74, "Marvel", 101.00);
-        ctlg.add(p);
-
-        // PRODUTO 22
-        n = new String[]{"Mulher","Maravilha","-","Sangue"}; 
-        a = new String[]{"Azzarello","Brian"}; 
-        g = new String[]{"Acao","Aventura"};
-        p = new Produto(22, n, a, g, 42, "DC", 30.00);
-        ctlg.add(p);
-
-        // PRODUTO 23
-        n = new String[]{"Black","Hammer","-","Origens","Secretas"}; 
-        a = new String[]{"Lemire","Jeff"}; 
-        g = new String[]{"Acao","Fantasia"};
-        p = new Produto(23, n, a, g, 101, "Intriseca", 26.59);
-        ctlg.add(p);
-
-        // PRODUTO 24
-        n = new String[]{"Tio","Patinhas","e","Pato","Donald"}; 
-        a = new String[]{"Rosa","Don"}; 
-        g = new String[]{"Infantil","Aventura "};
-        p = new Produto(24, n, a, g, 93, "Abril", 47.90);
-        ctlg.add(p);
-
-        // PRODUTO 25
-        n = new String[]{"Boa","Noite","Punpun"}; 
-        a = new String[]{"Asano","Inio"}; 
-        g = new String[]{"Aventura","Suspense"};
-        p = new Produto(25, n, a, g, 49, "JBC", 37.70);
-        ctlg.add(p);
     }
+
     
     // PESQUISAR POR NOME, EDITORA OU AUTOR DE UM HQ
     protected ArrayList Pesquisar(String s){
@@ -288,4 +183,5 @@ public class Catalogo {
             System.out.println("");
         }
     }    
+
 }
