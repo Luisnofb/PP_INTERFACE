@@ -1,0 +1,4 @@
+luis;123;3333;3333;3333;3333;33333
+tu;321;aaaaa;aaaaa;bbbbb;ccccc;dddddd
+pff;pff;1;1;1;slz;ma
+bene;1597532684;06;03;cidade operaria;são luis;maranhão
